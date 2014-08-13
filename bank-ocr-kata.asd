@@ -5,5 +5,6 @@
   :components ((:file "package")
                (:file "dictionary" :depends-on ("package"))
                (:file "util")
+               (:file "checksum" :depends-on ("util"))
                (:file "parse" :depends-on ("dictionary" "util"))
-               (:file "tests" :depends-on ("parse"))))
+               (:file "tests" :depends-on ("parse" "checksum"))))

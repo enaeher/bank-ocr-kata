@@ -39,3 +39,27 @@ including the blank line after the digits."
                                        (write-entry-to-stream number output))))
       (5am:is (equal random-account-numbers (parse input))))))
 
+(5am:test checksum
+  (let ((valid (mapcar 'integer->digit-list '(888886888
+                                              888888880
+                                              888888988
+                                              555655555
+                                              559555555
+                                              666566666
+                                              686666666
+                                              899999999
+                                              993999999
+                                              999959999
+                                              490067115
+                                              490067719
+                                              490867715
+                                              123456789
+                                              000000051
+                                              490867715)))
+        (invalid (mapcar 'integer->digit-list '(888888888
+                                                555555555
+                                                666666666
+                                                999999999
+                                                490067715))))
+    (5am:is (every 'checksum-valid-p valid))
+    (5am:is (notany 'checksum-valid-p invalid))))
