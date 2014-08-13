@@ -8,7 +8,7 @@
              ;; take sets of three elements
              :for (first second third)
              ;; rotate the lists so that the first three elements are the first three columns
-             :on (rotate (mapcar 'string-to-list strings))
+             :on (rotate (mapcar 'string->list strings))
              ;; jump three elements in each iteration
              :by #'cdddr
              ;; rotate them back so that we again have a list of rows to

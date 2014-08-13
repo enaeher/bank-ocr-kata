@@ -3,10 +3,10 @@
 (defun rotate (list-of-lists)
   (apply #'mapcar #'list list-of-lists))
 
-(defun string-to-list (string)
+(defun string->list (string)
   (coerce string 'list))
 
-(defun list-to-string (list)
+(defun list->string (list)
   (coerce list 'string))
 
 (defun flatten-once (list)

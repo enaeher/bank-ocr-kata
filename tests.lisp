@@ -1,17 +1,17 @@
 (in-package :ocr)
 
-(defun strings-from-digits (digits)
+(defun digits->ascii (digits)
   "Returns a list of three strings (one per line) representing the
 ASCII art representation of DIGITS, which should be a list of 9
 integers."
-  (mapcar 'list-to-string
+  (mapcar 'list->string
           (mapcar 'flatten-once
                   (rotate (loop :for digit :in digits :collecting (nth digit *digits*))))))
 
 (defun write-digits-to-stream (digits stream)
   "Writes an ASCII art representation of DIGITS (a list of 9 integers)
 to STREAM."
-  (dolist (string (strings-from-digits digits))
+  (dolist (string (digits->ascii digits))
     (princ string stream)
     (terpri stream)))
 
