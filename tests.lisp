@@ -71,3 +71,9 @@ including the blank line after the digits."
     (5am:is (string= "888886888" (with-output-to-string (s) (write-report-line valid s))))
     (5am:is (string= "888888888 ERR" (with-output-to-string (s) (write-report-line invalid s))))
     (5am:is (string= "8888?8888 ILL" (with-output-to-string (s) (write-report-line illegible s))))))
+
+(5am:test integration
+  ;; for the sake of simplicity, this test assumes sample-input is in
+  ;; the current working directory
+  (write-report-to-file "sample-input" "test-output")
+  (5am:is (zerop (sb-ext:process-exit-code (sb-ext:run-program "/usr/bin/diff" (list "test-output" "expected-output"))))))
