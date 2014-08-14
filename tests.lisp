@@ -1,8 +1,10 @@
 (in-package :ocr)
 
+;; Utility functions used to generate test data
+
 (defun digits->ascii (digits)
   "Returns a list of three strings (one per line) representing the
- ASCII art representation of DIGITS, which should be a list of 9
+  ASCII art representation of DIGITS, which should be a list of 9
   integers."
   (mapcar 'list->string
           (mapcar 'flatten-once
@@ -23,6 +25,8 @@
 
 (defun random-account-number ()
   (loop :for i :from 0 :to *digits-per-entry* :collecting (random 10)))
+
+;; Test suite proper
 
 (5am:def-suite bank-ocr-kata)
 (5am:in-suite bank-ocr-kata)
@@ -71,6 +75,8 @@
     (5am:is (notany 'checksum-valid-p invalid))))
 
 (5am:test format
+  "Test that we can generate the correct report lines for for a series
+  of sample inputs"
   (let ((valid '(8 8 8 8 8 6 8 8 8))
         (invalid '(8 8 8 8 8 8 8 8 8))
         (illegible '(8 8 8 8 nil 8 8 8 8)))
