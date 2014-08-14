@@ -2,22 +2,22 @@
 
 (defun digits->ascii (digits)
   "Returns a list of three strings (one per line) representing the
-ASCII art representation of DIGITS, which should be a list of 9
-integers."
+ ASCII art representation of DIGITS, which should be a list of 9
+  integers."
   (mapcar 'list->string
           (mapcar 'flatten-once
                   (rotate (loop :for digit :in digits :collecting (nth digit *digits*))))))
 
 (defun write-digits-to-stream (digits stream)
   "Writes an ASCII art representation of DIGITS (a list of 9 integers)
-to STREAM."
+  to STREAM."
   (dolist (string (digits->ascii digits))
     (princ string stream)
     (terpri stream)))
 
 (defun write-entry-to-stream (digits stream)
   "Writes a full entry for DIGITS (a list of 9 integers) to stream,
-including the blank line after the digits."
+  including the blank line after the digits."
   (write-digits-to-stream digits stream)
   (terpri stream))
 
