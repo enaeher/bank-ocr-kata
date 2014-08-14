@@ -10,4 +10,5 @@
                (:file "parse" :depends-on ("dictionary" "util"))
                (:file "report" :depends-on ("parse"))
                (:file "file-io" :depends-on ("report"))
+               (:file "alternatives" :depends-on ("parse"))
                (:file "tests" :depends-on ("parse" "checksum"))))

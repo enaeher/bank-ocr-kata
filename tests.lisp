@@ -91,3 +91,32 @@
   ;; the current working directory
   (write-report-to-file "sample-input" "test-output")
   (5am:is (zerop (sb-ext:process-exit-code (sb-ext:run-program "/usr/bin/diff" (list "test-output" "expected-output"))))))
+
+(5am:test toggle-bit
+  (let ((sample-digit
+         ;; 2
+         '((#\Space #\_ #\Space)
+           (#\Space #\_ #\|)
+           (#\| #\_ #\Space))))
+    (5am:is (equal '((#\Space #\_ #\Space)
+                     (#\Space #\Space #\|)
+                     (#\| #\_ #\Space))
+                   (toggle-bit sample-digit 1 1)))
+    (5am:is (equal '((#\Space #\_ #\Space)
+                     (#\Space #\_ #\|)
+                     (#\| #\_ #\Space))
+                   sample-digit))))
+
+(5am:test find-valid-alternatives
+  "Test that we can correctly find valid alternatives to corrupted data."
+  (let ((corrupted-entry
+"    _  _  _  _  _  _     _ 
+|_||_|| ||_||_      |  ||_ 
+  | _||_||_||_|  |  |  | _|
+
+"))
+    (with-input-from-string (s corrupted-entry)
+      (multiple-value-bind (digits raw-character-list)
+          (parse-entry s)
+        (declare (ignore digits))
+        (5am:is (member '(4 9 0 8 6 7 7 1 5) (find-valid-alternatives raw-character-list) :test 'equal))))))
