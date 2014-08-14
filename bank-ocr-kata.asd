@@ -7,4 +7,6 @@
                (:file "util")
                (:file "checksum" :depends-on ("util"))
                (:file "parse" :depends-on ("dictionary" "util"))
+               (:file "report" :depends-on ("parse"))
+               (:file "file-io" :depends-on ("report"))
                (:file "tests" :depends-on ("parse" "checksum"))))

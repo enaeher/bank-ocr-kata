@@ -27,3 +27,7 @@
                      (floor integer (expt 10 exponent))
                    (setf integer new-integer)
                    digit)))
+
+(defun legible-p (digit-list)
+  (and (eql (length digit-list) 9)
+       (every #'identity digit-list)))

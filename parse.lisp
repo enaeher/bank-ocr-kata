@@ -23,5 +23,3 @@
      :while entry
      :collect entry))
 
-(defun parse-file (filename)
-  (parse (open filename)))

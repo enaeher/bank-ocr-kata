@@ -63,3 +63,11 @@ including the blank line after the digits."
                                                 490067715))))
     (5am:is (every 'checksum-valid-p valid))
     (5am:is (notany 'checksum-valid-p invalid))))
+
+(5am:test format
+  (let ((valid '(8 8 8 8 8 6 8 8 8))
+        (invalid '(8 8 8 8 8 8 8 8 8))
+        (illegible '(8 8 8 8 nil 8 8 8 8)))
+    (5am:is (string= "888886888" (with-output-to-string (s) (write-report-line valid s))))
+    (5am:is (string= "888888888 ERR" (with-output-to-string (s) (write-report-line invalid s))))
+    (5am:is (string= "8888?8888 ILL" (with-output-to-string (s) (write-report-line illegible s))))))
