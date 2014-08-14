@@ -29,5 +29,5 @@
                    digit)))
 
 (defun legible-p (digit-list)
-  (and (eql (length digit-list) 9)
+  (and (eql (length digit-list) *digits-per-entry*)
        (every #'identity digit-list)))

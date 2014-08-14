@@ -22,7 +22,7 @@
   (terpri stream))
 
 (defun random-account-number ()
-  (loop :for i :from 0 :to 9 :collecting (random 10)))
+  (loop :for i :from 0 :to *digits-per-entry* :collecting (random 10)))
 
 (5am:def-suite bank-ocr-kata)
 (5am:in-suite bank-ocr-kata)

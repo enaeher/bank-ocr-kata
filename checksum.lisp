@@ -6,6 +6,6 @@
   (let ((digits (reverse digits)))
     (zerop (mod (apply '+ (loop
                              :for digit :in digits
-                             :for i :from 1 :upto 9
+                             :for i :from 1 :upto *digits-per-entry*
                              :collecting (* i digit)))
                 11))))
