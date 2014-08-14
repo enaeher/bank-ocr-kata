@@ -28,11 +28,15 @@
 (5am:in-suite bank-ocr-kata)
 
 (5am:test parse-entry
+  "Test that we can parse a single randomly-generated entry and get
+  the correct value"
   (let ((random-account-number (random-account-number)))
     (with-input-from-string (input (with-output-to-string (output) (write-entry-to-stream random-account-number output)))
       (5am:is (equal random-account-number (parse-entry input))))))
 
 (5am:test parse-500-entries
+  "Test that we can parse a stream containing 500 entries (the length
+  of an average input file) and get the correct values"
   (let ((random-account-numbers (loop :for i :from 0 :upto 499 :collecting (random-account-number))))
     (with-input-from-string (input (with-output-to-string (output)
                                      (dolist (number random-account-numbers)
@@ -40,6 +44,8 @@
       (5am:is (equal random-account-numbers (parse input))))))
 
 (5am:test checksum
+  "Test that we correctly calclulate the checksum validity for a
+  series of account numbers"
   (let ((valid (mapcar 'integer->digit-list '(888886888
                                               888888880
                                               888888988
@@ -73,6 +79,8 @@
     (5am:is (string= "8888?8888 ILL" (with-output-to-string (s) (write-report-line illegible s))))))
 
 (5am:test integration
+  "Test that we can read in a file full of account numbers and write
+  the correct report back out to another file."
   ;; for the sake of simplicity, this test assumes sample-input is in
   ;; the current working directory
   (write-report-to-file "sample-input" "test-output")

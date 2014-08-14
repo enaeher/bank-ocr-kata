@@ -1,6 +1,9 @@
 (in-package :ocr)
 
 (defun rotate (list-of-lists)
+  "Rotates LIST-OF-LISTS, returning a list of lists where the first
+  list contains the first element of each input list, the second list
+  contains the second element, and so on."
   (apply #'mapcar #'list list-of-lists))
 
 (defun string->list (string)

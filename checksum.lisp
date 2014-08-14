@@ -2,7 +2,7 @@
 
 (defun checksum-valid-p (digits)
   "Computes the checksum for DIGITS, which should be a list of nine
-  integers."
+  integers, and returns true if the checksum is valid, else nil."
   (let ((digits (reverse digits)))
     (zerop (mod (apply '+ (loop
                              :for digit :in digits

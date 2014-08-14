@@ -51,5 +51,8 @@
    '((#\Space #\_ #\Space)
      (#\| #\_ #\|)
      (#\Space #\_ #\|)))
-  "A list of two-dimensional arrays of characters representing the
-  digits 0-9 in the specified ASCII art format.")
+  "A list of lists of lists of characters representing the digits 0-9
+  in the specified ASCII art format. The index of each element in this
+  list corresponds to the digit that it represents. Each element
+  contains a list of rows, each of which contains a list of
+  characters (i.e. row-major order).")
