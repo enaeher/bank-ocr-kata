@@ -1,15 +1,9 @@
 (in-package :ocr)
 
-(defun other-value (value column-number)
-  (assert (member value '(#\_ #\| #\Space)))
-  (if (eql #\Space value)
-      (if (= (mod column-number 3) 1) #\_ #\|)
-      #\Space))
-
 (defun toggle-bit (character-list row column)
   (let ((copy (copy-tree character-list)))
     (setf (nth column (nth row copy))
-          (other-value (nth column (nth row copy)) column))
+          (not (nth column (nth row copy))))
     copy))
 
 (defun find-valid-alternatives (raw-character-list)

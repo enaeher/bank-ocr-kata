@@ -29,7 +29,12 @@
   (terpri stream))
 
 (defun random-account-number ()
-  (loop :for i :from 0 :to *digits-per-entry* :collecting (random 10)))
+  (loop :for number := (loop :for i :from 0 :below *digits-per-entry* :collecting (random 10))
+     :when (checksum-valid-p number)
+     :return number))
+
+(defun randomly-corrupt-data (raw-character-list)
+  (toggle-bit raw-character-list (random *rows-per-entry*) (random *characters-per-line*)))
 
 ;; Test suite proper
 
@@ -98,30 +103,20 @@
   (5am:is (zerop (sb-ext:process-exit-code (sb-ext:run-program "/usr/bin/diff" (list "test-output" "expected-output"))))))
 
 (5am:test toggle-bit
-  (let ((sample-digit
-         ;; 2
-         '((#\Space #\_ #\Space)
-           (#\Space #\_ #\|)
-           (#\| #\_ #\Space))))
-    (5am:is (equal '((#\Space #\_ #\Space)
-                     (#\Space #\Space #\|)
-                     (#\| #\_ #\Space))
+  (let ((sample-digit (copy-tree (nth 2 *digits*))))
+    (5am:is (equal '((nil t nil)
+                     (nil nil t)
+                     (t t nil))
                    (toggle-bit sample-digit 1 1)))
-    (5am:is (equal '((#\Space #\_ #\Space)
-                     (#\Space #\_ #\|)
-                     (#\| #\_ #\Space))
+    (5am:is (equal (nth 2 *digits*)
                    sample-digit))))
 
 (5am:test find-valid-alternatives
   "Test that we can correctly find valid alternatives to corrupted data."
-  (let ((corrupted-entry
-"    _  _  _  _  _  _     _ 
-|_||_|| ||_||_      |  ||_ 
-  | _||_||_||_|  |  |  | _|
-
-"))
-    (with-input-from-string (s corrupted-entry)
-      (multiple-value-bind (digits raw-character-list)
-          (parse-entry s)
-        (declare (ignore digits))
-        (5am:is (member '(4 9 0 8 6 7 7 1 5) (find-valid-alternatives raw-character-list) :test 'equal))))))
+  (let ((random-account-numbers (loop :for i :from 0 :upto 20 :collecting (random-account-number))))
+    (with-input-from-string (s (with-output-to-string (output)
+                                 (dolist (number random-account-numbers)
+                                   (write-entry-to-stream number output))))
+      (loop :for (digits raw-character-list) := (multiple-value-list (parse-entry s))
+         :while (every 'identity raw-character-list)
+         :do (5am:is (member digits (find-valid-alternatives (randomly-corrupt-data raw-character-list)) :test 'equal))))))
