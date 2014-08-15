@@ -2,13 +2,18 @@
 
 ;; Utility functions used to generate test data
 
+(defun digit->character-list (digit)
+  "Returns a list of characters, given a list of booleans representing
+  a digit."
+  (mapcar (lambda (row) (mapcar 'boolean->character row '(0 1 2))) digit)) 
+
 (defun digits->ascii (digits)
   "Returns a list of three strings (one per line) representing the
   ASCII art representation of DIGITS, which should be a list of 9
   integers."
   (mapcar 'list->string
           (mapcar 'flatten-once
-                  (rotate (loop :for digit :in digits :collecting (nth digit *digits*))))))
+                  (rotate (loop :for digit :in digits :collecting (digit->character-list (nth digit *digits*)))))))
 
 (defun write-digits-to-stream (digits stream)
   "Writes an ASCII art representation of DIGITS (a list of 9 integers)

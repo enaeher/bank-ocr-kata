@@ -6,6 +6,19 @@
   contains the second element, and so on."
   (apply #'mapcar #'list list-of-lists))
 
+(defun boolean->character (boolean column-index)
+  (if boolean
+      (if (eql (mod column-index 3) 1) #\_ #\|)
+      #\Space))
+
+(defun character->boolean (character)
+  (cond ((eql character #\Space)
+         nil)
+        ((member character '(#\_ #\|))
+         t)
+        (t
+         (error "Character must be one of space, underscore, or pipe"))))
+
 (defun string->list (string)
   (coerce string 'list))
 

@@ -18,7 +18,7 @@
   three lines. If any digit is illegible, nil will appear in the list
   of digits. If it's not possible to read three lines from the stream,
   parse-entry will return nil."
-  (let* ((strings (loop :for i :from 1 :upto 3 :collecting (string->list (read-line stream nil))))
+  (let* ((strings (loop :for i :from 1 :upto 3 :collecting (mapcar #'character->boolean (string->list (read-line stream nil)))))
          (parsed-account-number (when (every 'identity strings) (%parse-character-list strings))))
     ;; ignore blank line between entries
     (read-line stream nil)

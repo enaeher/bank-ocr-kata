@@ -3,56 +3,58 @@
 (defparameter *digits*
   (list
    ;; 0
-   '((#\Space #\_ #\Space)
-     (#\| #\Space #\|)
-     (#\| #\_ #\|))
+   '((nil t nil)   ;;  _ 
+     (t nil t)     ;; | |
+     (t t t))      ;; |_|
 
    ;; 1
-   '((#\Space #\Space #\Space)
-     (#\Space #\Space #\|)
-     (#\Space #\Space #\|))
+   '((nil nil nil) ;;
+     (nil nil t)   ;;   |
+     (nil nil t))  ;;   |
 
    ;; 2
-   '((#\Space #\_ #\Space)
-     (#\Space #\_ #\|)
-     (#\| #\_ #\Space))
+   '((nil t nil)   ;;  _     
+     (nil t t)     ;;  _|
+     (t t nil))    ;; |_
 
    ;; 3
-   '((#\Space #\_ #\Space)
-     (#\Space #\_ #\|)
-     (#\Space #\_ #\|))
+   '((nil t nil)   ;;  _
+     (nil t t)     ;;  _|
+     (nil t t))    ;;  _|
 
    ;; 4
-   '((#\Space #\Space #\Space)
-     (#\| #\_ #\|)
-     (#\Space #\Space #\|))
+   '((nil nil nil) ;;
+     (t t t)       ;; |_|
+     (nil nil t))  ;;   |
 
    ;; 5
-   '((#\Space #\_ #\Space)
-     (#\| #\_ #\Space)
-     (#\Space #\_ #\|))
+   '((nil t nil)   ;;  _
+     (t t nil)     ;; |_
+     (nil t t))    ;;  _|
 
    ;; 6
-   '((#\Space #\_ #\Space)
-     (#\| #\_ #\Space)
-     (#\| #\_ #\|))
+   '((nil t nil)   ;;  _
+     (t t nil)     ;; |_
+     (t t t))      ;; |_|
 
    ;; 7
-   '((#\Space #\_ #\Space)
-     (#\Space #\Space #\|)
-     (#\Space #\Space #\|))
+   '((nil t nil)   ;;  _
+     (nil nil t)   ;;   |
+     (nil nil t))  ;;   |
 
    ;; 8
-   '((#\Space #\_ #\Space)
-     (#\| #\_ #\|)
-     (#\| #\_ #\|))
+   '((nil t nil)   ;;  _
+     (t t t)       ;; |_|
+     (t t t))      ;; |_|
 
    ;; 9
-   '((#\Space #\_ #\Space)
-     (#\| #\_ #\|)
-     (#\Space #\_ #\|)))
-  "A list of lists of lists of characters representing the digits 0-9
-  in the specified ASCII art format. The index of each element in this
-  list corresponds to the digit that it represents. Each element
+   '((nil t nil)   ;;  _
+     (t t t)       ;; |_|
+     (nil t t)))   ;;  _|
+  
+  "A list of lists of lists of booleans representing the digits 0-9 in
+  the specified ASCII art format. Spaces are mapped to nil, and
+  underscores and pipes are mapped to t. The index of each element in
+  this list corresponds to the digit that it represents. Each element
   contains a list of rows, each of which contains a list of
   characters (i.e. row-major order).")
