@@ -1,14 +1,15 @@
 (in-package :ocr)
 
-(defun deep-copy-list (list)
-  (mapcar 'copy-list list))
+(defun other-value (value column-number)
+  (assert (member value '(#\_ #\| #\Space)))
+  (if (eql #\Space value)
+      (if (= (mod column-number 3) 1) #\_ #\|)
+      #\Space))
 
 (defun toggle-bit (character-list row column)
-  (let ((copy (deep-copy-list character-list)))
+  (let ((copy (copy-tree character-list)))
     (setf (nth column (nth row copy))
-          (if (eql #\Space (nth column (nth row copy)))
-              (if (oddp column) #\_ #\|)
-              #\Space))
+          (other-value (nth column (nth row copy)) column))
     copy))
 
 (defun find-valid-alternatives (raw-character-list)
